@@ -2,6 +2,7 @@
 	import type {MouseEventHandler, PointerEventHandler} from "svelte/elements";
 	import {ENTER, BACKSPACE} from "../lib/keys";
 	import {settings} from "../lib/settings.svelte";
+	import {on} from "svelte/events";
 
 	interface Props {
 		key: string;
@@ -47,6 +48,20 @@
 		popoverElement?.hidePopover();
 		popoverVisible = false;
 	}
+
+	function closeOnOutside(event: PointerEvent) {
+		if (event.target instanceof Element && !popoverElement?.contains(event.target)) {
+			closePopover();
+		}
+	}
+
+	$effect(() => {
+		if (!popoverVisible) {
+			return;
+		}
+
+		return on(window, "pointerdown", closeOnOutside);
+	});
 
 	const onPointerDown: PointerEventHandler<HTMLElement> = ({currentTarget}) => {
 		if (variants.length === 0) {
@@ -133,7 +148,7 @@
 {#if variants.length > 0}
 	<div
 		bind:this={popoverElement}
-		popover="auto"
+		popover="manual"
 		tabindex="0"
 		role="dialog"
 		class={[
@@ -153,11 +168,6 @@
 			"[&:popover-open]:flex",
 			"backdrop:bg-transparent",
 		]}
-		ontoggle={event => {
-			if (event.newState === "closed") {
-				popoverVisible = false;
-			}
-		}}
 	>
 		<kbd
 			role="button"

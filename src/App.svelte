@@ -150,7 +150,7 @@
 
 <SettingsDialog bind:this={settingsDialog} />
 
-<div class={["min-h-svh", "flex", "flex-col", "bg-base-100"]}>
+<div class={["min-h-svh", "flex", "flex-col", "bg-base-100", "select-none"]}>
 	<div class={["navbar", "bg-base-200", "border-b", "border-base-300", "shadow-sm"]}>
 		<div class="navbar-start"></div>
 		<div class="navbar-center">
