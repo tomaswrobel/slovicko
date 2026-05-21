@@ -1,0 +1,44 @@
+{
+	"name": "wordle-svelte",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"author": {
+		"email": "mail@tomaswrobel.dev",
+		"name": "Tomáš Wróbel",
+		"url": "https://tomaswrobel.dev"
+	},
+	"scripts": {
+		"generate-icons": "node scripts/generate-icons.ts",
+		"predev": "pnpm run generate-icons",
+		"prebuild": "pnpm run generate-icons",
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
+		"format": "prettier --write .",
+		"check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
+		"test": "vitest run"
+	},
+	"devDependencies": {
+		"@sveltejs/vite-plugin-svelte": "^7.1.2",
+		"@tailwindcss/vite": "^4.3.0",
+		"@tsconfig/svelte": "^5.0.8",
+		"@types/node": "^24.12.3",
+		"daisyui": "^5.5.20",
+		"prettier": "^3.8.3",
+		"prettier-plugin-svelte": "^4.0.1",
+		"sharp": "^0.34.5",
+		"svelte": "^5.55.5",
+		"svelte-check": "^4.4.8",
+		"tailwindcss": "^4.3.0",
+		"typescript": "~6.0.2",
+		"vite": "^8.0.12",
+		"vite-plugin-pwa": "^1.3.0",
+		"vitest": "^4.1.7"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"sharp"
+		]
+	}
+}
