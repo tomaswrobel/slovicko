@@ -14,7 +14,7 @@
 	{#each KEYBOARD_ROWS as row (row)}
 		<div class={["flex", "gap-1.5", "justify-center"]}>
 			{#each row as key (key)}
-				<Key {key} color={key.length === 1 ? getKeyColor(key) : undefined} {ontype} />
+				<Key {key} {getKeyColor} {ontype} />
 			{/each}
 		</div>
 	{/each}

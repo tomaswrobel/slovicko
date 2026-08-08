@@ -6,7 +6,7 @@
 
 	interface Props {
 		key: string;
-		color?: "correct" | "present" | "absent";
+		getKeyColor: (letter: string) => "correct" | "present" | "absent" | undefined;
 		ontype: (letter: string) => void;
 	}
 
@@ -26,9 +26,11 @@
 		z: ["ž"],
 	};
 
-	const {key, color, ontype}: Props = $props();
+	const {key, getKeyColor, ontype}: Props = $props();
 
 	const variants = $derived(settings.value.language === "cs" ? (DIACRITICS[key] ?? []) : []);
+	const color = $derived(key.length === 1 ? getKeyColor(key) : undefined);
+	const variantColors = $derived(variants.map(getKeyColor));
 	const isWide = $derived(key === ENTER || key === BACKSPACE);
 
 	let popoverElement = $state<HTMLElement>();
@@ -140,8 +142,20 @@
 >
 	{key}
 	{#if variants.length > 0}
-		<span class={["absolute", "bottom-1", "right-1", "size-1", "rounded-full", "bg-base-content/30"]}
-		></span>
+		<span class={["absolute", "top-0.5", "left-1/2", "-translate-x-1/2", "flex", "gap-0.5"]}>
+			{#each variantColors as variantColor}
+				<span
+					class={[
+						"size-1",
+						"rounded-full",
+						variantColor === "correct" && "bg-success",
+						variantColor === "present" && "bg-warning",
+						variantColor === "absent" && "bg-neutral",
+						!variantColor && "bg-base-content/30",
+					]}
+				></span>
+			{/each}
+		</span>
 	{/if}
 </kbd>
 
@@ -187,12 +201,17 @@
 				"flex",
 				"items-center",
 				"justify-center",
-				"bg-base-200",
+				"transition-colors",
+				color === "correct" && "bg-success text-success-content border-success",
+				color === "present" && "bg-warning text-warning-content border-warning",
+				color === "absent" && "bg-neutral text-neutral-content border-neutral",
+				!color && "bg-base-200",
 			]}
 			onclick={() => pickVariant(key)}
 			onkeydown={event => event.key === "Enter" && pickVariant(key)}>{key}</kbd
 		>
 		{#each variants as variant}
+			{@const variantColor = getKeyColor(variant)}
 			<kbd
 				role="button"
 				tabindex="0"
@@ -211,10 +230,10 @@
 					"flex",
 					"items-center",
 					"justify-center",
-					"hover:bg-warning",
-					"hover:text-warning-content",
-					"hover:border-warning",
 					"transition-colors",
+					variantColor === "correct" && "bg-success text-success-content border-success",
+					variantColor === "present" && "bg-warning text-warning-content border-warning",
+					variantColor === "absent" && "bg-neutral text-neutral-content border-neutral",
 				]}
 				onclick={() => pickVariant(variant)}
 				onkeydown={event => event.key === "Enter" && pickVariant(variant)}>{variant}</kbd
