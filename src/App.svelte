@@ -8,6 +8,7 @@
 	import {ENTER, BACKSPACE} from "./lib/keys";
 	import {WORD_LENGTH} from "./lib/wordLength";
 	import {settings, type Language} from "./lib/settings.svelte";
+	import {streak} from "./lib/streak.svelte";
 	import {getTranslations} from "./lib/i18n";
 	import {getTileState, getKeyColor} from "./lib/game";
 
@@ -76,6 +77,7 @@
 		if (currentInput === target) {
 			gameOver = true;
 			won = true;
+			streak.value++;
 			const winMsg = t.winMessages[Math.floor(Math.random() * t.winMessages.length)];
 			if (!winMsg) {
 				return;
@@ -83,6 +85,7 @@
 			showMessage(winMsg, 99999);
 		} else if (currentRow === maxAttempts - 1) {
 			gameOver = true;
+			streak.value = 0;
 			showMessage(target.toUpperCase(), 99999);
 		}
 		currentRow++;
@@ -152,7 +155,10 @@
 
 <div class={["min-h-svh", "flex", "flex-col", "bg-base-100", "select-none"]}>
 	<div class={["navbar", "bg-base-200", "border-b", "border-base-300", "shadow-sm"]}>
-		<div class="navbar-start"></div>
+		<div class={["navbar-start", "pl-3", "gap-1", "font-bold"]} title={t.streakLabel}>
+			<span>🔥</span>
+			<span>{streak.value}</span>
+		</div>
 		<div class="navbar-center">
 			<span class={["text-2xl", "font-black", "tracking-widest", "uppercase"]}>Slovíčko</span>
 		</div>

@@ -3411,6 +3411,9 @@ dřímá
 dříme
 dřímu
 dřina
+dřině
+dřinu
+dřiny
 dříne
 dříně
 dřínu
@@ -3496,7 +3499,7 @@ ducha
 duchu
 duchů
 duchy
-duích
+dukát
 duješ
 dujme
 dujou
