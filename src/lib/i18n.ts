@@ -10,6 +10,7 @@ interface Translations {
 	maxAttemptsLabel: string;
 	save: string;
 	close: string;
+	streakLabel: string;
 }
 
 const TRANSLATIONS: Record<Language, Translations> = {
@@ -23,6 +24,7 @@ const TRANSLATIONS: Record<Language, Translations> = {
 		maxAttemptsLabel: "Maximální počet pokusů",
 		save: "Uložit",
 		close: "zavřít",
+		streakLabel: "Série",
 	},
 	en: {
 		notEnoughLetters: "Not enough letters",
@@ -34,6 +36,7 @@ const TRANSLATIONS: Record<Language, Translations> = {
 		maxAttemptsLabel: "Maximum attempts",
 		save: "Save",
 		close: "close",
+		streakLabel: "Streak",
 	},
 };
 
